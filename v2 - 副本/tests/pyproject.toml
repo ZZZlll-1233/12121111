@@ -1,0 +1,102 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pystrkit"
+version = "0.1.0"
+description = "零依赖的中文文本处理工具库：人民币大写、脱敏、宽度截断、混排计数"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [{ name = "YOUR_NAME", email = "YOU_EMAIL" }]
+keywords = ["chinese", "text", "string", "utility", "rmb", "中文文本处理"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Linguistic",
+    "Typing :: Typed",
+]
+# 公开 API 刻意保持零依赖：依赖越多，被采纳的成本越高
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.6",
+    "mypy>=1.8",
+    "build>=1.0",
+    "twine>=5.0",
+]
+docs = ["mkdocs>=1.6", "mkdocs-material>=9.5"]
+
+[project.urls]
+Homepage = "https://gitee.com/YOUR_USER/pystrkit"
+Documentation = "https://YOUR_USER.gitee.io/pystrkit/"
+Issues = "https://gitee.com/YOUR_USER/pystrkit/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+pystrkit = ["py.typed"]
+
+# ---------------------------------------------------------------- 工具链配置
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["src", "tests"]
+# --doctest-modules：让 docstring 里的示例参与测试，文档不会腐坏
+addopts = "-q --strict-markers --doctest-modules"
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["pystrkit"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 90
+exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError", "@overload"]
+
+[tool.mypy]
+python_version = "3.9"
+files = ["src", "tests"]
+strict = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle 错误
+    "W",   # pycodestyle 警告
+    "F",   # pyflakes
+    "I",   # isort 导入排序
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "N",   # pep8-naming
+    "RUF", # ruff 自带规则
+]
+# RUF001/002/003：不要强制把中文标点、中文字符串转成 ASCII，本库面向中文场景
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["N802"]  # 测试函数名允许用下划线风格以外的命名

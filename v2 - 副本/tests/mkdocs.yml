@@ -1,0 +1,55 @@
+site_name: pystrkit
+site_description: 零依赖的中文文本处理工具库
+site_author: YOUR_NAME
+site_url: https://YOUR_USER.gitee.io/pystrkit/
+repo_url: https://gitee.com/YOUR_USER/pystrkit
+repo_name: gitee/YOUR_USER/pystrkit
+edit_uri: blob/main/docs/
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色模式
+
+nav:
+  - 首页: index.md
+  - 快速开始: quickstart.md
+  - API 参考: api.md
+  - 常见问题: faq.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  - search
